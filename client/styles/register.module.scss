@@ -6,3 +6,12 @@
     align-self: flex-start;
   }
 }
+
+.required {
+  &::after {
+    color: rgb(255 0 0);
+    content: "*";
+    display: inline-block;
+    margin-left: 0.25em;
+  }
+}

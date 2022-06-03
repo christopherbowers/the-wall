@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import styles from '@/styles/home.module.scss'
-import Post from '@/components/post'
-import PostForm from '@/components/postForm'
+import styles from '@styles/home.module.scss'
+import { Post, PostForm } from '@components/.'
 
 export async function getServerSideProps() {
   const res = await fetch(
@@ -20,7 +19,7 @@ export async function getServerSideProps() {
 
 export default function Home({ posts }) {
 
-  const [authenticated, setAuthenticated] = useState(true)
+  const [authenticated, setAuthenticated] = useState(false)
 
   return (
     <div className={styles.container}>

@@ -1,34 +1,27 @@
-import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import styles from '@/styles/register.module.scss'
+import styles from '@styles/register.module.scss'
+import axios from 'axios'
+import { BASE_URL } from '../globals'
 
 export default function Register() {
 
   const router = useRouter()
 
-  const [formValues, setFormValues] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  })
-
-  const handleChange = (e) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value })
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await RegisterUser({
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
-      email: formValues.email,
-      password: formValues.password
-    })
-    setFormValues(initialState)
-    // router.push('/')
+    const form = document.getElementById('registrationForm')
+
+    await axios
+      .post(`${BASE_URL}/user/register/`, {
+        email: e.target.email.value,
+        password: e.target.password.value
+      })
+      .then(() => {
+        form.reset()
+        alert('Thank you for registering!')
+        router.push('/')
+      }).catch(error => error.message)
   }
 
 
@@ -36,12 +29,12 @@ export default function Register() {
     <>
 
       <h2>Register</h2>
-        <form className={styles.registrationForm} required onSubmit={handleSubmit}>
-          <label htmlFor='email'>Email</label>
-          <input type='text' name='email' required onChange={handleChange} />
+        <form id='registrationForm' className={styles.registrationForm} onSubmit={handleSubmit}>
+          <label htmlFor='email' className={styles.required}>Email</label>
+          <input type='email' name='email' required />
 
-          <label htmlFor='password'>Password</label>
-          <input type='password' name='password' required minLength="8" onChange={handleChange} />
+          <label htmlFor='password' className={styles.required}>Password</label>
+          <input type='password' name='password' required minLength="8" />
 
           <button>Register</button>
         </form>
