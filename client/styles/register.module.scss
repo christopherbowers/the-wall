@@ -1,0 +1,8 @@
+.registrationForm {
+  display: flex;
+  flex-flow: column;
+
+  button {
+    align-self: flex-start;
+  }
+}
