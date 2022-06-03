@@ -42,7 +42,10 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
   username = None
   first_name = models.CharField(max_length=150, blank=False)
   last_name = models.CharField(max_length=150, blank=False)
-  start_date = models.DateTimeField(default=timezone.now)
+  start_date = models.DateTimeField(
+    default=timezone.now,
+    editable=False,
+    blank=True,)
   is_staff = models.BooleanField(default=False)
   is_active = models.BooleanField(default=True)
 
