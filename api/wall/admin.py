@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Wall
+from .models import WallPost
 
 class WallAdminConfig(admin.ModelAdmin):
-  model = Wall
-  list_display = ('id', 'modified_by', 'modified_date')
-  ordering = ('-modified_date',)
-  list_filter = ('modified_date',)
+  model = WallPost
+  list_display = ('id', 'posted_by', 'post_date')
+  ordering = ('-post_date',)
+  list_filter = ('post_date',)
 
-admin.site.register(Wall, WallAdminConfig)
+admin.site.register(WallPost, WallAdminConfig)
