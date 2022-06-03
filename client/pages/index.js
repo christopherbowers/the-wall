@@ -1,7 +1,8 @@
+import { useState } from 'react'
 import Head from 'next/head'
-import styles from '@/styles/Home.module.scss'
-import Post from '@/components/post'
-
+import Link from 'next/link'
+import styles from '@styles/home.module.scss'
+import { Post, PostForm } from '@components/.'
 
 export async function getServerSideProps() {
   const res = await fetch(
@@ -17,6 +18,9 @@ export async function getServerSideProps() {
 
 
 export default function Home({ posts }) {
+
+  const [authenticated, setAuthenticated] = useState(false)
+
   return (
     <div className={styles.container}>
       <Head>
@@ -28,8 +32,26 @@ export default function Home({ posts }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to The Wall App</h1>
+        <div className={styles.wall}>
 
-        {posts ? <Post posts={ posts }/> : <div>Loading...</div>}
+        {authenticated ? (
+          <PostForm />
+          ) : (
+          <p>
+            Please{' '}
+            <Link href='login'>
+              <a>log in</a>
+            </Link>
+            {' '}or{' '}
+            <Link href='register'>
+              <a>register</a>
+            </Link>
+            {' '}to post.
+          </p>
+          )}
+
+          <Post posts={ posts } />
+        </div>
 
       </main>
 
