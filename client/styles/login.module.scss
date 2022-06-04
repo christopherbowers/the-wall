@@ -1,5 +1,9 @@
-/* stylelint-disable */
-.registrationForm {
+.login {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.login__form {
   display: flex;
   flex-flow: column;
 
@@ -8,7 +12,7 @@
   }
 }
 
-.required {
+.login__form-required {
   &::after {
     color: rgb(255 0 0);
     content: "*";

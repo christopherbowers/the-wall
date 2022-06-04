@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PostList, PostDetail, PostCreate
+from .views import PostList, PostDetail, PostCreate, PostEditDetails
 
 app_name = 'wall_api'
 

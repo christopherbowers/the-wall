@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import Head from 'next/head'
+import { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '@styles/home.module.scss'
+import GlobalContext from '@contexts/userContext'
+import { BASE_URL } from '../globals'
 import { Post, PostForm } from '@components/.'
+import axios from 'axios'
 
 export async function getServerSideProps() {
   const res = await fetch(
@@ -19,7 +23,29 @@ export async function getServerSideProps() {
 
 export default function Home({ posts }) {
 
-  const [authenticated, setAuthenticated] = useState(false)
+  const global = useContext(GlobalContext)
+
+  useEffect(() => {
+    const checkToken = async () => {
+      // await fetch(`${BASE_URL}/token/refresh/`, { method: "POST", credentials: 'include' })
+      await axios
+        .post(`http://localhost:8000/api/token/refresh/`, { withCredentials: true }
+            // headers: {
+              // 'Content-Type': 'application/json',
+              // 'Authorization': `Bearer ${global.token}`
+            // }
+          // }
+        )
+        .then((res) => {
+          console.log(res)
+        }).catch((error) => {error.message})
+    }
+
+    checkToken()
+
+  },[])
+
+ console.log(global.token)
 
   return (
     <div className={styles.container}>
@@ -34,7 +60,7 @@ export default function Home({ posts }) {
         <h1 className={styles.title}>Welcome to The Wall App</h1>
         <div className={styles.wall}>
 
-        {authenticated ? (
+        {global.token ? (
           <PostForm />
           ) : (
           <p>
