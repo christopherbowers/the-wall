@@ -1,8 +1,10 @@
-import { useState } from 'react'
 import Head from 'next/head'
+import { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '@styles/home.module.scss'
+import GlobalContext from '@contexts/userContext'
 import { Post, PostForm } from '@components/.'
+import axios from 'axios'
 
 export async function getServerSideProps() {
   const res = await fetch(
@@ -17,9 +19,34 @@ export async function getServerSideProps() {
 }
 
 
+// Home.getInitailProps = async (context) => {
+//   const data = await fetch(`${BASE_URL}/token/refresh/`, {
+//     credentials: 'include',
+//     headers: {
+//       cookie:  context.req.headers.cookie
+//     },
+//   })
+//   .then(res => res.json()).then(console.log(data));
+// }
+
+
+
 export default function Home({ posts }) {
 
-  const [authenticated, setAuthenticated] = useState(false)
+  const global = useContext(GlobalContext)
+
+  // Check is access token is valid
+  useEffect(() => {
+    const varify = async () => {
+      await axios.get('/api/verify')
+        .then(global.update({
+            authenticated: true
+          })
+        )
+    }
+    varify()
+  },[])
+
 
   return (
     <div className={styles.container}>
@@ -34,16 +61,18 @@ export default function Home({ posts }) {
         <h1 className={styles.title}>Welcome to The Wall App</h1>
         <div className={styles.wall}>
 
-        {authenticated ? (
+        {global.authenticated ? (
           <PostForm />
           ) : (
+
+
           <p>
             Please{' '}
-            <Link href='login'>
+            <Link href='/login'>
               <a>log in</a>
             </Link>
             {' '}or{' '}
-            <Link href='register'>
+            <Link href='/register'>
               <a>register</a>
             </Link>
             {' '}to post.

@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from '@styles/register.module.scss'
 import axios from 'axios'
-import { BASE_URL } from '../globals'
 
 export default function Register() {
 
@@ -13,12 +12,12 @@ export default function Register() {
     const form = document.getElementById('registrationForm')
 
     await axios
-      .post(`${BASE_URL}/user/register/`, {
+      .post('/api/register/', {
         email: e.target.email.value,
         password: e.target.password.value
       })
       .then(() => {
-        form.reset()
+        // form.reset()
         alert('Thank you for registering!')
         router.push('/')
       }).catch(error => error.message)

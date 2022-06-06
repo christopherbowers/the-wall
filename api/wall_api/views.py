@@ -1,7 +1,7 @@
 from rest_framework import generics
 from wall.models import WallPost
 from .serializers import WallPostSerializer
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, IsAuthenticated
 
 
 class WallPostUserPermission(BasePermission):
@@ -24,11 +24,11 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = WallPostSerializer
 
 class PostCreate(generics.CreateAPIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = WallPost.objects.all()
     serializer_class = WallPostSerializer
 
 class PostEditDetails(generics.RetrieveUpdateDestroyAPIView, WallPostUserPermission):
-    # permission_classes = [WallPostUserPermission]
+    permission_classes = [WallPostUserPermission]
     queryset = WallPost.objects.all()
     serializer_class = WallPostSerializer
