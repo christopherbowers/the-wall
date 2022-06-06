@@ -1,10 +1,8 @@
-// import { useState } from 'react'
 import Head from 'next/head'
 import { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '@styles/home.module.scss'
 import GlobalContext from '@contexts/userContext'
-// import { BASE_URL } from '../globals'
 import { Post, PostForm } from '@components/.'
 import axios from 'axios'
 
@@ -37,47 +35,18 @@ export default function Home({ posts }) {
 
   const global = useContext(GlobalContext)
 
-  useEffect(() => {
-
-    const checkToken = async () => {
-      await axios.get(`/api/refresh`)
-      // await axios        .post(`/api/refresh`)
-        .then((res) => {
-          console.log(res)
-        }).catch((error) => {error.message})
-    }
-
-    if (typeof window !== 'undefined') {
-      // checkToken()
-    }
-
-  },[])
-
-
   // Check is access token is valid
   useEffect(() => {
     const varify = async () => {
       await axios.get('/api/verify')
-      console.log('authed')
+        .then(global.update({
+            authenticated: true
+          })
+        )
     }
-
-    if (global.token)  varify()
+    varify()
   },[])
 
-  // Paser JWT to get user ID
-  // const parseJwt = (token) => {
-  //   try {
-  //     return JSON.parse(atob(token.split('.')[1]));
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
-
-  // if (global.token) {
-  //   let id = parseJwt(global.token).user_id
-  //   console.log(id)
-    // console.log('token')
-  // }
 
   return (
     <div className={styles.container}>
@@ -92,9 +61,11 @@ export default function Home({ posts }) {
         <h1 className={styles.title}>Welcome to The Wall App</h1>
         <div className={styles.wall}>
 
-        {global.token ? (
+        {global.authenticated ? (
           <PostForm />
           ) : (
+
+
           <p>
             Please{' '}
             <Link href='/login'>

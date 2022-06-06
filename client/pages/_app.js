@@ -4,7 +4,7 @@ import GlobalContext from '@contexts/userContext'
 
 function MyApp({ Component, pageProps }) {
   const [state, setState] = useState({
-    token: null,
+    authenticated: null,
     update
   })
 

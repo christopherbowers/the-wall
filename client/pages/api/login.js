@@ -13,12 +13,10 @@ export default async (req, res) => {
 
     try {
       const apiRes = await axios.post(`${BASE_URL}/token/`, body, {
-        // method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },
-        // body: body
+        }
       })
 
       const data = await apiRes.data
@@ -41,7 +39,9 @@ export default async (req, res) => {
           }),
         ])
 
-        return res.status(200).json(data)
+        return res.status(200).json({
+          success: 'Logged in successfully'
+        })
       } else {
         return res.status(apiRes.status).json({
           error: 'Authentication failed',

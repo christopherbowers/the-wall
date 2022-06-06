@@ -13,7 +13,7 @@ export default async (req, res) => {
     try {
       const apiRes = await axios.post(`${BASE_URL}/user/register/`, body, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         }
       })
 
