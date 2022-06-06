@@ -1,10 +1,10 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import Head from 'next/head'
 import { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '@styles/home.module.scss'
 import GlobalContext from '@contexts/userContext'
-import { BASE_URL } from '../globals'
+// import { BASE_URL } from '../globals'
 import { Post, PostForm } from '@components/.'
 import axios from 'axios'
 
@@ -21,15 +21,33 @@ export async function getServerSideProps() {
 }
 
 
+// Home.getInitailProps = async (context) => {
+//   const data = await fetch(`${BASE_URL}/token/refresh/`, {
+//     credentials: 'include',
+//     headers: {
+//       cookie:  context.req.headers.cookie
+//     },
+//   })
+//   .then(res => res.json()).then(console.log(data));
+// }
+
+
+
 export default function Home({ posts }) {
 
   const global = useContext(GlobalContext)
 
   useEffect(() => {
+
     const checkToken = async () => {
       // await fetch(`${BASE_URL}/token/refresh/`, { method: "POST", credentials: 'include' })
       await axios
-        .post(`http://localhost:8000/api/token/refresh/`, { withCredentials: true }
+        .post(`/api/refresh`,
+          { headers: {
+              withCredentials: true,
+              // Cookie: ctx.req.headers.cookie
+            }
+          }
             // headers: {
               // 'Content-Type': 'application/json',
               // 'Authorization': `Bearer ${global.token}`
@@ -41,11 +59,27 @@ export default function Home({ posts }) {
         }).catch((error) => {error.message})
     }
 
-    checkToken()
+    if (typeof window !== 'undefined') {
+      // checkToken()
+      // console.log('window')
+    }
 
   },[])
 
- console.log(global.token)
+  // Paser JWT to get user ID
+  const parseJwt = (token) => {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  if (global.token) {
+    let id = parseJwt(global.token).user_id
+    console.log(id)
+    // console.log('token')
+  }
 
   return (
     <div className={styles.container}>
@@ -65,11 +99,11 @@ export default function Home({ posts }) {
           ) : (
           <p>
             Please{' '}
-            <Link href='login'>
+            <Link href='/login'>
               <a>log in</a>
             </Link>
             {' '}or{' '}
-            <Link href='register'>
+            <Link href='/register'>
               <a>register</a>
             </Link>
             {' '}to post.
