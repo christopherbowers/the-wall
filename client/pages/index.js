@@ -40,20 +40,8 @@ export default function Home({ posts }) {
   useEffect(() => {
 
     const checkToken = async () => {
-      // await fetch(`${BASE_URL}/token/refresh/`, { method: "POST", credentials: 'include' })
-      await axios
-        .post(`/api/refresh`,
-          { headers: {
-              withCredentials: true,
-              // Cookie: ctx.req.headers.cookie
-            }
-          }
-            // headers: {
-              // 'Content-Type': 'application/json',
-              // 'Authorization': `Bearer ${global.token}`
-            // }
-          // }
-        )
+      await axios.get(`/api/refresh`)
+      // await axios        .post(`/api/refresh`)
         .then((res) => {
           console.log(res)
         }).catch((error) => {error.message})
@@ -61,25 +49,35 @@ export default function Home({ posts }) {
 
     if (typeof window !== 'undefined') {
       // checkToken()
-      // console.log('window')
     }
 
   },[])
 
-  // Paser JWT to get user ID
-  const parseJwt = (token) => {
-    try {
-      return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-      return null;
-    }
-  }
 
-  if (global.token) {
-    let id = parseJwt(global.token).user_id
-    console.log(id)
+  // Check is access token is valid
+  useEffect(() => {
+    const varify = async () => {
+      await axios.get('/api/verify')
+      console.log('authed')
+    }
+
+    if (global.token)  varify()
+  },[])
+
+  // Paser JWT to get user ID
+  // const parseJwt = (token) => {
+  //   try {
+  //     return JSON.parse(atob(token.split('.')[1]));
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
+
+  // if (global.token) {
+  //   let id = parseJwt(global.token).user_id
+  //   console.log(id)
     // console.log('token')
-  }
+  // }
 
   return (
     <div className={styles.container}>
