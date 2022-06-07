@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '@styles/home.module.scss'
 import GlobalContext from '@contexts/userContext'
-import { Post, PostForm } from '@components/.'
+import { Post, PostForm, TopNav } from '@components/.'
 import axios from 'axios'
 
 export async function getServerSideProps() {
@@ -69,6 +69,7 @@ export default function Home({ posts }) {
       </Head>
 
       <main className={styles.main}>
+        <TopNav />
         <h1 className={styles.title}>Welcome to The Wall App</h1>
         <div className={styles.wall}>
 
