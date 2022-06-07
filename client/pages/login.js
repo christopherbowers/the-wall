@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from '@styles/login.module.scss'
 import axios from 'axios'
-import { BASE_URL } from '../globals'
 import GlobalContext from '@contexts/userContext'
 
 export default function LogIn() {

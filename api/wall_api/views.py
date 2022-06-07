@@ -9,11 +9,10 @@ class WallPostUserPermission(BasePermission):
 
   def has_object_permission(self, request, view, obj):
 
-    if request.user != obj.created_by:
+    if request.user != obj.posted_by:
       return False
     else:
-      return obj.created_by == request.user
-
+      return obj.posted_by == request.user
 
 class PostList(generics.ListAPIView):
     queryset = WallPost.objects.all()

@@ -5,6 +5,7 @@ import GlobalContext from '@contexts/userContext'
 function MyApp({ Component, pageProps }) {
   const [state, setState] = useState({
     authenticated: null,
+    id: undefined,
     update
   })
 
