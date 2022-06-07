@@ -18,35 +18,46 @@ export async function getServerSideProps() {
   }
 }
 
-
-// Home.getInitailProps = async (context) => {
-//   const data = await fetch(`${BASE_URL}/token/refresh/`, {
-//     credentials: 'include',
-//     headers: {
-//       cookie:  context.req.headers.cookie
-//     },
-//   })
-//   .then(res => res.json()).then(console.log(data));
-// }
-
-
-
 export default function Home({ posts }) {
 
   const global = useContext(GlobalContext)
 
-  // Check is access token is valid
+  // Check is access token is valid and set auth state
   useEffect(() => {
     const varify = async () => {
       await axios.get('/api/verify')
-        .then(global.update({
+        .then(() => {
+          global.update({
             authenticated: true
           })
-        )
+        }).catch(() => {
+          global.update({
+            authenticated: false
+          })
+        })
     }
     varify()
   },[])
 
+  // Get user info and set ID to global context
+  useEffect(() => {
+    const getUser = async () => {
+      await axios.get('/api/user')
+        .then((res) => {
+          global.update({
+            authenticated: true,
+            id: res.data.user.id
+          })
+        })
+        .catch((error) => error.message)
+    }
+
+    if (global.authenticated) {
+      getUser()
+    }
+  },[global.authenticated])
+
+  console.log(global.id)
 
   return (
     <div className={styles.container}>
@@ -64,8 +75,6 @@ export default function Home({ posts }) {
         {global.authenticated ? (
           <PostForm />
           ) : (
-
-
           <p>
             Please{' '}
             <Link href='/login'>

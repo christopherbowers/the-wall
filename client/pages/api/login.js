@@ -4,12 +4,8 @@ import { BASE_URL } from '../../globals'
 
 export default async (req, res) => {
   if (req.method === 'POST') {
-    const { email, password } = req.body
 
-    const body = JSON.stringify({
-      email,
-      password,
-    })
+  const body = req.body
 
     try {
       const apiRes = await axios.post(`${BASE_URL}/token/`, body, {
