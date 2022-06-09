@@ -1,0 +1,11 @@
+.nav {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 2em;
+  width: 100%;
+}
+
+.nav__header {
+  font-size: 1.5em;
+}

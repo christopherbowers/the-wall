@@ -1,0 +1,20 @@
+.login {
+  @include flex-col;
+}
+
+.login__form {
+  @include flex-col;
+
+  button {
+    align-self: flex-start;
+  }
+}
+
+.login__form-required {
+  &::after {
+    color: rgb(255 0 0);
+    content: "*";
+    display: inline-block;
+    margin-left: 0.25em;
+  }
+}

@@ -1,0 +1,17 @@
+$border: 2px;
+$radius: 6px;
+$sm: 672px;
+
+@mixin for-phone-only {
+  @media (max-width: $sm) { @content; }
+}
+
+@mixin flex-row {
+  display: flex;
+  flex-flow: row;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-flow: column;
+}

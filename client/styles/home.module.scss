@@ -1,0 +1,30 @@
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  @include flex-col;
+
+  align-items: center;
+  flex: 1;
+  min-height: 100vh;
+  padding: 1rem 0;
+}
+
+.footer {
+  @include flex-row;
+
+  align-items: center;
+  border-top: 1px solid #eaeaea;
+  flex: 1;
+  justify-content: center;
+  padding: 2rem 0;
+
+  a {
+    @include flex-row;
+
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+  }
+}

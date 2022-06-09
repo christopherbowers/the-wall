@@ -1,0 +1,10 @@
+.post {
+  border: $border solid;
+  border-radius: $radius;
+  margin: 0 0 1em;
+  padding: 2em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

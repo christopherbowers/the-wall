@@ -1,0 +1,13 @@
+.button {
+  background-color: transparent;
+  border: $border solid;
+  border-radius: $radius;
+  cursor: pointer;
+  margin: 1em 0 0;
+
+  &:hover {
+    border: calc($border + 2px) solid;
+    margin: -2px;
+    margin-top: calc(1em - 2px);
+  }
+}

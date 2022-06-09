@@ -1,0 +1,19 @@
+.postForm {
+  @include flex-col;
+
+  margin: 0 0 1em;
+}
+
+.postForm__form {
+  @include flex-col;
+
+  button {
+    align-self: flex-start;
+  }
+
+  textarea {
+    border: $border solid;
+    border-radius: $radius;
+    margin: 0 0 0.5em;
+  }
+}
