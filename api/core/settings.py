@@ -147,8 +147,8 @@ STATIC_URL = 'static/'
 # Email settings supplied for testing functionality
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'chris.bowers@gmail.com'
-EMAIL_HOST_PASSWORD = 'qexlimsixfajvzzl' #Gmail app specific password
+EMAIL_HOST_USER = 'email'
+EMAIL_HOST_PASSWORD = 'password'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS=True
 
